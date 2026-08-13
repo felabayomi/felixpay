@@ -1,0 +1,166 @@
+Here is your polished, structured instruction ready to paste directly into your Replit Agent.
+It is written clearly, technically, and includes the free trial requirement.
+
+⸻
+
+✅ Replit Agent Instruction
+
+Implement Premium 3-Tier Subscription System (With Free Trial)
+
+We are building a premium financial operating system, not a budgeting app.
+
+The pricing must:
+	•	Signal seriousness
+	•	Anchor high value
+	•	Create upgrade momentum
+	•	Increase lifetime value (LTV)
+	•	Remain clearly justified
+
+Do not implement low-tier or individual app pricing.
+This is a bundled platform model.
+
+⸻
+
+🔥 Subscription Architecture Requirements
+
+1️⃣ Centralized Billing
+	•	Use a single Stripe account.
+	•	All plans must be managed centrally.
+	•	No individual app subscriptions.
+	•	All tools unlock based on subscription tier.
+
+⸻
+
+🔥 3-Tier Pricing Structure
+
+🟢 Tier 1 — CONTROL
+
+$24/month
+or
+$240/year (2 months free)
+
+Access Includes:
+	•	FinanceWatch (core dashboard)
+	•	ExpenseWatch
+	•	BillWatch
+	•	IncomeLift
+	•	Basic reports & insights
+	•	Email support
+
+⸻
+
+🔵 Tier 2 — MOMENTUM (Default / Most Popular)
+
+$39/month
+or
+$390/year (2 months free)
+
+Includes everything in CONTROL plus:
+	•	DIY Debt Defense
+	•	SavingsPro
+	•	Advanced cash flow projections
+	•	Smart bill optimization insights
+	•	Priority support
+
+Free Trial Requirement:
+	•	14-day free trial (only for Momentum plan)
+	•	No trial for Control
+	•	No trial for Legacy
+
+Momentum should be the default highlighted plan in UI.
+
+⸻
+
+🟣 Tier 3 — LEGACY
+
+$59/month
+or
+$590/year (2 months free)
+
+Includes everything in MOMENTUM plus:
+	•	SteadyVest
+	•	WealthWatch analytics
+	•	Felix Pay automation suite
+	•	Felix CheckBook services
+	•	AI-driven financial roadmap insights
+	•	Quarterly group financial strategy sessions
+
+⸻
+
+🔐 Access Control Logic
+
+Implement:
+	•	Stripe subscription → plan ID
+	•	Backend verifies subscription tier
+	•	Features unlock dynamically based on plan
+	•	If subscription canceled → downgrade to limited/free access state
+
+⸻
+
+🧠 UX / Positioning Requirements
+
+Replace generic buttons like:
+
+❌ “Visit Platform”
+
+With:
+
+✅ “Enter Your Financial Command Center”
+
+This platform must be presented as:
+
+A Financial Operating System
+
+Not individual apps.
+
+⸻
+
+💳 Payment Flow Requirements
+	1.	User selects plan
+	2.	Stripe checkout
+	3.	After successful payment:
+	•	Create or update user account
+	•	Assign plan role (Control / Momentum / Legacy)
+	•	Redirect to central dashboard
+	4.	Dashboard displays modules based on plan permissions
+
+⸻
+
+🚫 Important Restrictions
+	•	Do NOT create separate payment systems per app
+	•	Do NOT allow individual tool purchases
+	•	Do NOT expose internal platform separation
+	•	Do NOT build separate pricing pages per tool
+
+This is one ecosystem.
+
+⸻
+
+📊 Future Scalability
+
+System must support:
+	•	Plan upgrades/downgrades
+	•	Annual billing discounts
+	•	Coupon codes
+	•	Enterprise plan addition later
+	•	Usage analytics per tier
+
+⸻
+
+🏁 Goal
+
+Create a unified subscription-based financial platform that:
+	•	Feels premium
+	•	Scales cleanly
+	•	Is easy to manage
+	•	Positions Debt to Legacy as financial infrastructure
+
+⸻
+
+If you’d like, I can next:
+	•	Draft the exact Stripe product configuration structure
+	•	Design the database schema for tier-based permissions
+	•	Map out the auth + SSO structure
+	•	Or write the pricing page frontend layout
+
+Let’s build this correctly from the foundation up.

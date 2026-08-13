@@ -1,0 +1,50 @@
+  POST https://api.stripe.com/v1/setup_intents/seti_1S8mnBR1wd3nFq6SAo88Yu9d/confirm 400 (Bad Request)
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+e @ shared-bb735369aef43…43321a0c3b3429.js:1
+c @ shared-bb735369aef43…43321a0c3b3429.js:1
+i @ shared-bb735369aef43…43321a0c3b3429.js:1
+s @ shared-bb735369aef43…43321a0c3b3429.js:1
+e @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+n @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+a @ shared-bb735369aef43…43321a0c3b3429.js:1
+i @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+_ @ shared-bb735369aef43…43321a0c3b3429.js:1
+confirm @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+n @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+a @ shared-bb735369aef43…43321a0c3b3429.js:1
+i @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+Promise.then
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+n @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+a @ shared-bb735369aef43…43321a0c3b3429.js:1
+i @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+n @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+a @ shared-bb735369aef43…43321a0c3b3429.js:1
+i @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ shared-bb735369aef43…43321a0c3b3429.js:1
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+value @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1
+(anonymous) @ controller-with-preconnect-3701871f472db931d981dddc2ec737c3.js:1Understand this error
+index-DH30-RNd.js:258 🏦 confirmSetup result: {setupIntent: undefined, error: {…}}
+index-DH30-RNd.js:258 ❌ Bank account confirmation error: {type: 'invalid_request_error', code: 'setup_intent_unexpected_state', doc_url: 'https://stripe.com/docs/error-codes/setup-intent-unexpected-state', message: 'A processing error occurred.', request_log_url: 'https://dashboard.stripe.com/logs/req_dVonxlzCyuCKpg?t=1758220981', …}

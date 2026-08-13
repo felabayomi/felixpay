@@ -1,0 +1,173 @@
+\*\*Build Brief — Stand-Alone Bill-Pay (uses a 3rd-party to MAIL PAPER CHECKS)
+
+* pulls bills from `https://bill-watch.replit.app` + Replit Auth\*\*
+
+**What to build**
+
+* A small web app that:
+
+  1. Authenticates users with **Replit OAuth**.
+  2. **Imports DUE bills** from BillWatch.
+  3. Schedules and sends **paper checks** via a **3rd-party check-mailing API** (default **Checkbook.io**; fallback **Lob**).
+  4. Tracks status via provider **webhooks**: *SENT* → *DELIVERED* → *FAILED*.
+  5. Minimal UI to view/cancel scheduled payments.
+
+---
+
+### 3rd-Party Integration (explicit)
+
+* **Primary provider:** `Checkbook.io` — server calls their API to **print & mail checks**.
+* **Fallback provider:** `Lob.com` Checks API — same purpose.
+* The browser never talks to providers; all calls are **server-to-provider** using API keys in secrets.
+
+---
+
+### Tech (simple)
+
+* Frontend: React + Tailwind (single page).
+* Backend: Node + TypeScript (Fastify or Express).
+* DB: Postgres (Prisma).
+* Jobs: BullMQ (Redis) for “send check” scheduling.
+* Secrets: Replit Secrets.
+
+---
+
+### Environment Variables
+
+```
+DATABASE_URL=...
+REDIS_URL=...
+BASE_URL=https://<your-replit-app>
+
+# Replit OAuth
+REPLIT_CLIENT_ID=...
+REPLIT_CLIENT_SECRET=...
+REPLIT_OAUTH_REDIRECT_URI=${BASE_URL}/api/auth/callback
+REPLIT_JWKS_URL=https://replit.com/oauth/jwks
+SESSION_SECRET=...
+
+# BillWatch (source of bills)
+BILLWATCH_EXPORT_URL=https://bill-watch.replit.app/api/export/bills
+BILLWATCH_EXPORT_TOKEN=...
+BILLWATCH_WEBHOOK_SECRET=...   # optional
+
+# Provider selection
+PAYMENT_PROVIDER=checkbook    # or lob
+
+# Checkbook.io
+CHECKBOOK_API_KEY=...
+CHECKBOOK_ENV=sandbox|live
+CHECKBOOK_WEBHOOK_SECRET=...
+
+# Lob (optional fallback)
+LOB_API_KEY=...
+LOB_ENV=sandbox|live
+LOB_WEBHOOK_SECRET=...
+```
+
+---
+
+### Data Model (minimal, Prisma)
+
+```prisma
+model User { id String @id @default(cuid()) replitId String @unique email String? name String? role Role @default(OWNER) }
+enum Role { OWNER AP_CLERK READONLY }
+
+model Bill {
+  id String @id @default(cuid())
+  sourceId String?   // BillWatch id (bw_*)
+  payeeName String
+  addressLine1 String
+  addressLine2 String?
+  city String
+  state String
+  postalCode String
+  country String @default("US")
+  amountCents Int
+  dueDate DateTime
+  memo String?
+  status BillStatus @default(SCHEDULED) // SCHEDULED | SENT | DELIVERED | FAILED | CANCELED
+  provider String   // "checkbook" | "lob"
+  providerId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+enum BillStatus { SCHEDULED SENT DELIVERED FAILED CANCELED }
+```
+
+---
+
+### How it works (simple flow)
+
+1. **Login (Replit OAuth)** → create/find local `User`.
+2. **Import** from BillWatch (`GET BILLWATCH_EXPORT_URL?status=due&from=...&to=...` with bearer token).
+3. Upsert each bill locally and **schedule a job** to mail the check at `dueDate - 7 days` (config).
+4. **Send job runs** → calls provider API to **create a paper check** with payee/address/amount/memo. Save `providerId`. Set status **SENT**.
+5. Provider **webhook** hits `/api/webhooks/provider` → verify signature → update status to **DELIVERED** or **FAILED**.
+6. UI shows list + statuses; allow **Cancel** while in **SCHEDULED**.
+
+---
+
+### API Routes (server)
+
+* `GET /api/auth/login` → start Replit OAuth
+* `GET /api/auth/callback` → finish OAuth; set session cookie
+* `POST /api/bills/import` → pull DUE bills from BillWatch; schedule sends
+* `GET /api/bills` → list bills (auth required)
+* `POST /api/bills` → manual add (optional)
+* `POST /api/bills/:id/cancel` → cancel if SCHEDULED
+* `POST /api/webhooks/provider` → provider events (verify signature)
+* `POST /api/webhooks/billwatch` (optional) → upsert on BillWatch events (verify HMAC)
+* `GET /healthz`
+
+---
+
+### Provider Calls (only on the server)
+
+* **Checkbook.io** (default):
+
+  * Create/send **paper check** with: `payeeName`, `address`, `amount`, `memo`.
+  * Store returned `check_id` in `providerId`.
+  * Webhook events map: `mailed`→SENT, `delivered`→DELIVERED, `failed|returned`→FAILED.
+* **Lob** (fallback):
+
+  * Create **check** object with `to` (address), `from` (our business), `amount`, `memo`.
+  * Map Lob events similarly to statuses above.
+
+---
+
+### Job Worker (BullMQ)
+
+* Queue: `bill.send`.
+* Job data: `{ billId, idempotencyKey }`.
+* On run: fetch bill → if still SCHEDULED → call provider → save `providerId` → set **SENT**.
+* Retries with backoff; after max attempts set **FAILED**.
+* Idempotency by `idempotencyKey = bill:{id}:{dueDate}`.
+
+---
+
+### UI (one page)
+
+* **Import** button → triggers `/api/bills/import`.
+* Table: Payee | Amount | Due | Mail Date | Status | Action (Cancel).
+* Status updates by polling every 15–30s (or Server-Sent Events).
+
+---
+
+### Auth & Security
+
+* All non-webhook routes require **Replit OAuth**; verify JWT for each request and attach `req.user`.
+* Provider and BillWatch webhooks: **verify signatures**, store and process **idempotently**.
+* API keys only in server environment; never exposed to the browser.
+* Logs redact PII.
+
+---
+
+### Done Criteria
+
+* Can log in with Replit and see the app.
+* Can click **Import** and see DUE bills from BillWatch appear and get **scheduled**.
+* On/near schedule, a **paper check is created** via the 3rd-party; bill becomes **SENT**.
+* Webhook updates to **DELIVERED** (or **FAILED**).
+* Can **Cancel** before sending.
+* No provider secrets on the client; README explains env vars + webhook tunnel.

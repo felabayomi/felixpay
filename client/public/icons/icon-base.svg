@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="64" fill="#3b82f6"/>
+  
+  <!-- Shield shape -->
+  <path d="M256 96C256 96 192 112 192 176V272C192 336 256 416 256 416S320 336 320 272V176C320 112 256 96 256 96Z" fill="white"/>
+  
+  <!-- Checkmark -->
+  <path d="M224 256L240 272L288 224" stroke="#3b82f6" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Felix Pay text (simplified for small icon) -->
+  <text x="256" y="464" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="white">FP</text>
+</svg>
