@@ -4,6 +4,8 @@ import { TrendingUp, PiggyBank, CreditCard, Target, Wallet, DollarSign, Building
 import { useClerk } from "@clerk/clerk-react";
 
 export default function Landing() {
+  const { openSignIn } = useClerk();
+
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-card border-b border-border">
