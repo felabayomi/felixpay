@@ -135,6 +135,12 @@ export function ensureDatabaseSchema(): Promise<void> {
       created_at timestamp DEFAULT now(),
       CONSTRAINT unique_stripe_charge_id UNIQUE (stripe_charge_id)
     );
-  `).then(() => {\n    console.log("FelixPay database schema is ready");\n  }).catch((error) => {\n    console.error("FelixPay database schema initialization failed", error);\n    setupPromise = undefined;\n    throw error;\n  });
+  `).then(() => {
+    console.log("FelixPay database schema is ready");
+  }).catch((error) => {
+    console.error("FelixPay database schema initialization failed", error);
+    setupPromise = undefined;
+    throw error;
+  });
   return setupPromise;
 }
