@@ -26,12 +26,7 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(err.status || err.statusCode || 500).json({ message: err.message || "Internal Server Error" });
 });
 
-if (app.get("env") === "development" && !process.env.VERCEL) {
-  const { setupVite } = await import("./vite.js");
-  await setupVite(app, server);
-} else {
-  serveStatic(app);
-}
+serveStatic(app);
 
 export default app;
 export { server };
