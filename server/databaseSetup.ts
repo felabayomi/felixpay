@@ -34,7 +34,7 @@ export function ensureDatabaseSchema(): Promise<void> {
     CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON felixpay.sessions (expire);
 
     CREATE TABLE IF NOT EXISTS felixpay.users (
-      id varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       email varchar UNIQUE,
       first_name varchar,
       last_name varchar,
@@ -47,7 +47,7 @@ export function ensureDatabaseSchema(): Promise<void> {
     );
 
     CREATE TABLE IF NOT EXISTS felixpay.bills (
-      id varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       source_id varchar,
       payee_name text NOT NULL,
       address_line1 text NOT NULL,
@@ -73,7 +73,7 @@ export function ensureDatabaseSchema(): Promise<void> {
     );
 
     CREATE TABLE IF NOT EXISTS felixpay.pay_links (
-      id varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       token varchar NOT NULL UNIQUE,
       user_id varchar NOT NULL REFERENCES felixpay.users(id),
       amount_cents integer NOT NULL,
@@ -90,7 +90,7 @@ export function ensureDatabaseSchema(): Promise<void> {
     );
 
     CREATE TABLE IF NOT EXISTS felixpay.memberships (
-      id varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       user_id varchar NOT NULL UNIQUE REFERENCES felixpay.users(id),
       stripe_customer_id varchar,
       stripe_subscription_id varchar UNIQUE,
@@ -110,7 +110,7 @@ export function ensureDatabaseSchema(): Promise<void> {
     );
 
     CREATE TABLE IF NOT EXISTS felixpay.payment_methods (
-      id varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       user_id varchar NOT NULL REFERENCES felixpay.users(id),
       stripe_payment_method_id varchar NOT NULL,
       type varchar NOT NULL DEFAULT 'card',
@@ -126,7 +126,7 @@ export function ensureDatabaseSchema(): Promise<void> {
     );
 
     CREATE TABLE IF NOT EXISTS felixpay.transactions (
-      id varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       user_id varchar NOT NULL REFERENCES felixpay.users(id),
       bill_id varchar REFERENCES felixpay.bills(id),
       amount_cents integer NOT NULL,
@@ -135,6 +135,6 @@ export function ensureDatabaseSchema(): Promise<void> {
       created_at timestamp DEFAULT now(),
       CONSTRAINT unique_stripe_charge_id UNIQUE (stripe_charge_id)
     );
-  `).then(() => undefined);
+  `).then(() => {\n    console.log("FelixPay database schema is ready");\n  }).catch((error) => {\n    console.error("FelixPay database schema initialization failed", error);\n    setupPromise = undefined;\n    throw error;\n  });
   return setupPromise;
 }
