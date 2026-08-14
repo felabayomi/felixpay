@@ -8,5 +8,5 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+export const pool = new Pool({\n  connectionString: process.env.DATABASE_URL,\n  options: "-c search_path=felixpay,public",\n});
 export const db = drizzle(pool, { schema });
