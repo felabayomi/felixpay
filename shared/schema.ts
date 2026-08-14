@@ -2,20 +2,21 @@ import { sql } from 'drizzle-orm';
 import {
   index,
   jsonb,
-  pgTable,
+  pgSchema,
   timestamp,
   varchar,
   integer,
   text,
-  pgEnum,
   unique,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+const felixpaySchema = pgSchema("felixpay");
+
 // Session storage table.
 // (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
-export const sessions = pgTable(
+export const sessions = felixpaySchema.table(
   "sessions",
   {
     sid: varchar("sid").primaryKey(),
@@ -27,7 +28,7 @@ export const sessions = pgTable(
 
 // User storage table.
 // (IMPORTANT) This table is mandatory for Replit Auth, don't drop it.
-export const users = pgTable("users", {
+export const users = felixpaySchema.table("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   email: varchar("email").unique(),
   firstName: varchar("first_name"),
@@ -40,7 +41,7 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const billStatusEnum = pgEnum("bill_status", [
+export const billStatusEnum = felixpaySchema.enum("bill_status", [
   "PENDING",
   "SCHEDULED",
   "PROCESSING",
@@ -50,12 +51,12 @@ export const billStatusEnum = pgEnum("bill_status", [
   "CANCELED"
 ]);
 
-export const settlementSourceEnum = pgEnum("settlement_source", [
+export const settlementSourceEnum = felixpaySchema.enum("settlement_source", [
   "system",
   "external"
 ]);
 
-export const settlementMethodEnum = pgEnum("settlement_method", [
+export const settlementMethodEnum = felixpaySchema.enum("settlement_method", [
   "ach",
   "wire",
   "cash",
@@ -65,7 +66,7 @@ export const settlementMethodEnum = pgEnum("settlement_method", [
   "other"
 ]);
 
-export const bills = pgTable("bills", {
+export const bills = felixpaySchema.table("bills", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   sourceId: varchar("source_id"), // BillWatch id (bw_*)
   payeeName: text("payee_name").notNull(),
@@ -92,14 +93,14 @@ export const bills = pgTable("bills", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const payLinkStatusEnum = pgEnum("pay_link_status", [
+export const payLinkStatusEnum = felixpaySchema.enum("pay_link_status", [
   "active",
   "paid",
   "expired",
   "canceled"
 ]);
 
-export const payLinks = pgTable("pay_links", {
+export const payLinks = felixpaySchema.table("pay_links", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   token: varchar("token").notNull().unique(),
   userId: varchar("user_id").notNull().references(() => users.id),
@@ -116,7 +117,7 @@ export const payLinks = pgTable("pay_links", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const membershipStatusEnum = pgEnum("membership_status", [
+export const membershipStatusEnum = felixpaySchema.enum("membership_status", [
   "active",
   "past_due",
   "canceled",
@@ -124,13 +125,13 @@ export const membershipStatusEnum = pgEnum("membership_status", [
   "inactive",
 ]);
 
-export const membershipTierEnum = pgEnum("membership_tier", [
+export const membershipTierEnum = felixpaySchema.enum("membership_tier", [
   "control",
   "momentum",
   "legacy",
 ]);
 
-export const memberships = pgTable("memberships", {
+export const memberships = felixpaySchema.table("memberships", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").notNull().references(() => users.id).unique(),
   stripeCustomerId: varchar("stripe_customer_id"),
@@ -166,10 +167,10 @@ export type Membership = typeof memberships.$inferSelect;
 export type InsertMembership = typeof memberships.$inferInsert;
 
 // Payment method types enum (temporarily disabled to avoid casting issues)
-// export const paymentMethodTypeEnum = pgEnum("payment_method_type", ["card"]);
+// export const paymentMethodTypeEnum = felixpaySchema.enum("payment_method_type", ["card"]);
 
 // Payment methods table
-export const paymentMethods = pgTable("payment_methods", {
+export const paymentMethods = felixpaySchema.table("payment_methods", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").notNull().references(() => users.id),
   stripePaymentMethodId: varchar("stripe_payment_method_id").notNull(),
@@ -188,7 +189,7 @@ export const paymentMethods = pgTable("payment_methods", {
 });
 
 // Transactions table
-export const transactions = pgTable("transactions", {
+export const transactions = felixpaySchema.table("transactions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").notNull().references(() => users.id),
   billId: varchar("bill_id").references(() => bills.id),
