@@ -3,7 +3,7 @@ import express, { type Request, type Response, type NextFunction } from "express
 import { registerRoutes } from "./routes.js";
 import { serveStatic, log } from "./runtime.js";
 import { validateStripeConfiguration } from "./lib/stripe.js";
-import { validateMercuryConfiguration } from "./services/mercury.js";
+import { validateMercuryConfiguration } from "./services/mercury.js";\nimport { ensureDatabaseSchema } from "./databaseSetup.js";
 
 const app = express();
 app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 try { validateStripeConfiguration(); } catch (error) { console.warn("Stripe is not configured; payment features remain unavailable.", error); }
 try { validateMercuryConfiguration(); } catch (error) { console.warn("Mercury is not configured; Mercury features remain unavailable.", error); }
 
-const server = await registerRoutes(app);
+await ensureDatabaseSchema();\nconst server = await registerRoutes(app);
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
   res.status(err.status || err.statusCode || 500).json({ message: err.message || "Internal Server Error" });
