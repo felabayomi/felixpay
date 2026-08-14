@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, PiggyBank, CreditCard, Target, Wallet, DollarSign, Building2, ShieldCheck, BookCheck, Coins, LineChart } from "lucide-react";\nimport { useClerk } from "@clerk/clerk-react";
+import { TrendingUp, PiggyBank, CreditCard, Target, Wallet, DollarSign, Building2, ShieldCheck, BookCheck, Coins, LineChart } from "lucide-react";
+import { useClerk } from "@clerk/clerk-react";
 
 export default function Landing() {
   return (
