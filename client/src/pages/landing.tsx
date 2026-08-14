@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, PiggyBank, CreditCard, Target, Wallet, DollarSign, Building2, ShieldCheck, BookCheck, Coins, LineChart } from "lucide-react";
+import { TrendingUp, PiggyBank, CreditCard, Target, Wallet, DollarSign, Building2, ShieldCheck, BookCheck, Coins, LineChart } from "lucide-react";\nimport { useClerk } from "@clerk/clerk-react";
 
 export default function Landing() {
   return (
@@ -13,7 +13,7 @@ export default function Landing() {
               <h1 className="text-2xl font-bold text-primary">Felix Pay</h1>
             </div>
             <Button 
-              onClick={() => window.location.href = '/api/login'}
+              onClick={() => openSignIn({ fallbackRedirectUrl: "/" })}
               data-testid="button-login"
             >
               Sign In
