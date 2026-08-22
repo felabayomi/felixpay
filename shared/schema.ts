@@ -2,6 +2,7 @@ import { sql } from 'drizzle-orm';
 import {
   index,
   jsonb,
+  boolean,
   pgSchema,
   timestamp,
   varchar,
@@ -272,3 +273,39 @@ export function isValidInternalPaymentMethodType(type: string): type is Internal
 export function isValidStripePaymentMethodType(type: string): type is StripePaymentMethodType {
   return type === 'card';
 }
+
+
+export const roadmapQuizResults = felixpaySchema.table("roadmap_quiz_results", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  phase: text("phase").notNull(),
+  readinessScore: integer("readiness_score").notNull(),
+  upgradeAvailable: text("upgrade_available"),
+  overdraftRecent: boolean("overdraft_recent").notNull(),
+  knowsTrueBalance: boolean("knows_true_balance").notNull(),
+  hasHighInterestDebt: boolean("has_high_interest_debt").notNull(),
+  hasEmergencySavings: boolean("has_emergency_savings").notNull(),
+  activelyInvesting: boolean("actively_investing").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const roadmapLeads = felixpaySchema.table("roadmap_leads", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: text("email").notNull(),
+  phase: text("phase").notNull(),
+  readinessScore: integer("readiness_score").notNull(),
+  quizResultId: varchar("quiz_result_id").references(() => roadmapQuizResults.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertRoadmapQuizResultSchema = createInsertSchema(roadmapQuizResults).omit({
+  id: true,
+  createdAt: true,
+});
+export const insertRoadmapLeadSchema = createInsertSchema(roadmapLeads).omit({
+  id: true,
+  createdAt: true,
+});
+export type RoadmapQuizResult = typeof roadmapQuizResults.$inferSelect;
+export type InsertRoadmapQuizResult = typeof roadmapQuizResults.$inferInsert;
+export type RoadmapLead = typeof roadmapLeads.$inferSelect;
+export type InsertRoadmapLead = typeof roadmapLeads.$inferInsert;
