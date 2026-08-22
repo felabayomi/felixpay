@@ -49,9 +49,18 @@ export default function Landing() {
             <Button
               size="lg"
               className="bg-emerald-600 hover:bg-emerald-700 text-white"
-              onClick={() => window.open('https://debtlegacypath.com', '_blank')}
+              onClick={() => window.location.href = '/roadmap'}
+              data-testid="button-roadmap-web"
             >
-              Take Financial Roadmap Test
+              Use Financial Roadmap Online
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => window.open('https://apps.apple.com/us/app/debt-to-legacy/id6760262157', '_blank', 'noopener,noreferrer')}
+              data-testid="button-roadmap-ios"
+            >
+              Download the iOS App
             </Button>
           </div>
 
