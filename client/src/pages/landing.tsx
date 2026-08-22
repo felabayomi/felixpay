@@ -154,7 +154,7 @@ export default function Landing() {
                   Boost your income streams
                 </CardDescription>
                 <a 
-                  href="https://incomelift.co" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
@@ -177,7 +177,7 @@ export default function Landing() {
                   Steady growth investing
                 </CardDescription>
                 <a 
-                  href="https://steadyvest.org" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
@@ -200,7 +200,7 @@ export default function Landing() {
                   Smart bill management
                 </CardDescription>
                 <a 
-                  href="https://billwatch.pro" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
@@ -247,7 +247,7 @@ export default function Landing() {
                   Secure payment solutions
                 </CardDescription>
                 <a 
-                  href="https://felixpay.net" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
@@ -270,7 +270,7 @@ export default function Landing() {
                   Advanced expense tracking
                 </CardDescription>
                 <a 
-                  href="https://expensewatch.pro" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
@@ -293,7 +293,7 @@ export default function Landing() {
                   Complete financial overview
                 </CardDescription>
                 <a 
-                  href="https://financewatch.app" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
@@ -316,7 +316,7 @@ export default function Landing() {
                   Check printing & mailing service
                 </CardDescription>
                 <a 
-                  href="https://felixcheck.com" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
