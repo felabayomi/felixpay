@@ -129,7 +129,7 @@ export default function Dashboard() {
   }, [resultId, navigate]);
 
   const { data: result, isLoading } = useQuery<QuizResult>({
-    queryKey: ["/api/quiz-results", resultId],
+    queryKey: ["/api/roadmap/quiz-results", resultId],
     enabled: !!resultId,
   });
 
@@ -140,11 +140,11 @@ export default function Dashboard() {
     },
     onSuccess: (data) => {
       setUpgradeDialogOpen(false);
-      queryClient.invalidateQueries({ queryKey: ["/api/quiz-results", resultId] });
+      queryClient.invalidateQueries({ queryKey: ["/api/roadmap/quiz-results", resultId] });
       if (data.redirect) {
         const fullUrl = data.redirect.startsWith("http")
           ? data.redirect
-          : `https://felixpay.net${data.redirect}`;
+          : `${window.location.origin}${data.redirect}`;
         window.location.href = fullUrl;
       }
     },
@@ -162,7 +162,7 @@ export default function Dashboard() {
       return res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/quiz-results", resultId] });
+      queryClient.invalidateQueries({ queryKey: ["/api/roadmap/quiz-results", resultId] });
     },
   });
 
