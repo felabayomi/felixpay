@@ -12,6 +12,7 @@ import { getStripe, getWebhookSecret, calculateChargeWithFee } from "./lib/strip
 import { getMercuryService, MercuryConfigurationError, MercuryApiError } from "./services/mercury";
 import { z } from "zod";
 import { nanoid } from "nanoid";
+import { registerRoadmapRoutes } from "./roadmapRoutes.js";
 
 // Stripe client - lazy initialized in payment service to avoid startup crashes
 
@@ -2663,6 +2664,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: error.message });
     }
   });
+
+  registerRoadmapRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;
