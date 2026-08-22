@@ -223,7 +223,7 @@ export default function Landing() {
                   Debt elimination strategies
                 </CardDescription>
                 <a 
-                  href="https://diydebt.org" 
+                  href="https://dtlfos.felixpay.online/finance" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
