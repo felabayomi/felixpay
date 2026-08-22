@@ -125,6 +125,28 @@ export function ensureDatabaseSchema(): Promise<void> {
       updated_at timestamp DEFAULT now()
     );
 
+    CREATE TABLE IF NOT EXISTS felixpay.roadmap_quiz_results (
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
+      phase text NOT NULL,
+      readiness_score integer NOT NULL,
+      upgrade_available text,
+      overdraft_recent boolean NOT NULL,
+      knows_true_balance boolean NOT NULL,
+      has_high_interest_debt boolean NOT NULL,
+      has_emergency_savings boolean NOT NULL,
+      actively_investing boolean NOT NULL,
+      created_at timestamp NOT NULL DEFAULT now()
+    );
+
+    CREATE TABLE IF NOT EXISTS felixpay.roadmap_leads (
+      id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
+      email text NOT NULL,
+      phase text NOT NULL,
+      readiness_score integer NOT NULL,
+      quiz_result_id varchar REFERENCES felixpay.roadmap_quiz_results(id),
+      created_at timestamp NOT NULL DEFAULT now()
+    );
+
     CREATE TABLE IF NOT EXISTS felixpay.transactions (
       id varchar PRIMARY KEY DEFAULT (gen_random_uuid()::text),
       user_id varchar NOT NULL REFERENCES felixpay.users(id),
