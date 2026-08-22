@@ -15,6 +15,9 @@ import TermsOfUse from "@/pages/terms-of-use";
 import HowToUse from "@/pages/how-to-use";
 import PayLinkPage from "@/pages/pay-link";
 import NotFound from "@/pages/not-found";
+import RoadmapHome from "@/pages/roadmap-home";
+import RoadmapDiagnosis from "@/pages/roadmap-diagnosis";
+import RoadmapDashboard from "@/pages/roadmap-dashboard";
 import { useClerk } from "@clerk/clerk-react";
 import { useEffect } from "react";
 
@@ -51,6 +54,9 @@ function Router() {
 
   return (
     <Switch>
+      <Route path="/roadmap" component={RoadmapHome} />
+      <Route path="/roadmap/diagnosis" component={RoadmapDiagnosis} />
+      <Route path="/roadmap/dashboard" component={RoadmapDashboard} />
       {isLoading || !isAuthenticated ? (
         <>
           <Route path="/" component={Landing} />
