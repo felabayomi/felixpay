@@ -83,6 +83,7 @@ const UPGRADE_MESSAGES: Record<string, { banner: string; description: string }> 
 };
 
 const REDIRECT_MAP: Record<string, string> = {
+  STABILIZE: "/membership?recommended=control",
   ELIMINATE: "/membership?recommended=momentum",
   BUILD: "/membership?recommended=legacy",
 };
