@@ -29,8 +29,8 @@ const TIER_CONFIG = {
   control: {
     name: 'CONTROL',
     phase: 'Phase 1 – Stabilize',
-    monthlyPrice: 24,
-    annualPrice: 240,
+    monthlyPrice: 4.99,
+    annualPrice: 49,
     icon: ShieldCheck,
     cta: 'Enter Control',
     description: 'Master your financial foundation',
@@ -46,8 +46,8 @@ const TIER_CONFIG = {
   momentum: {
     name: 'MOMENTUM',
     phase: 'Phase 2 – Eliminate',
-    monthlyPrice: 39,
-    annualPrice: 390,
+    monthlyPrice: 7.99,
+    annualPrice: 79,
     icon: Zap,
     popular: true,
     trial: true,
@@ -65,8 +65,8 @@ const TIER_CONFIG = {
   legacy: {
     name: 'LEGACY',
     phase: 'Phase 3 – Build',
-    monthlyPrice: 59,
-    annualPrice: 590,
+    monthlyPrice: 9.99,
+    annualPrice: 99,
     icon: Crown,
     cta: 'Enter Legacy',
     description: 'Build generational wealth',
@@ -333,7 +333,7 @@ export default function MembershipPage() {
               const hasTrial = key === 'momentum';
               const isRecommended = recommended === key;
               const price = annual ? config.annualPrice : config.monthlyPrice;
-              const perMonth = annual ? Math.round(config.annualPrice / 12) : config.monthlyPrice;
+              const perMonth = annual ? (config.annualPrice / 12).toFixed(2) : config.monthlyPrice.toFixed(2);
 
               return (
                 <Card
